@@ -1,0 +1,55 @@
+{
+  "name": "vite-vue-electron-demo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start": "start cmd /k pnpm vite:dev && pnpm elec:dev",
+    "build": "pnpm vite:build && pnpm builder",
+    "elec:dev": "electron .",
+    "vite:dev": "pnpm -r vite:dev",
+    "vite:build:hot": "pnpm -r build:hot",
+    "vite:build": "pnpm -r build:vite",
+    "clean": "rm -rf ./build",
+    "kill:app":"taskkill /f /t /im vite-vue-electron.exe",
+    "builder": "pnpm run clean && electron-builder build"
+  },
+  "build": {
+    "productName": "vite-vue-electron",
+    "appId": "com.vite.vue.electron",
+    "copyright": "diehunter",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "packages/app/dist/**/*",
+      "src/**/*",
+      "main.js"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "ia32"
+          ]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^23.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-reload": "2.0.0-alpha.1",
+    "utils-lib-js": "^1.6.0"
+  }
+}
